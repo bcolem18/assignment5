@@ -133,10 +133,12 @@ int main(int argc, char *argv[])
    // int arr[] = {12, 11, 13, 5, 6, 7};
    // int arr_size = sizeof(arr)/sizeof(arr[0]);
     omp_set_num_threads(numThreads);
-    printf("Given array is \n");
-    printArray(arr, N);
+   /* printf("Given array is \n");
+    printArray(arr, N); */
  
- 
+	std::chrono::time_point<std::chrono::system_clock> start, end;
+
+start = std::chrono::system_clock::now(); 
      #pragma omp parallel 
     {
         
@@ -145,11 +147,18 @@ int main(int argc, char *argv[])
         
         
     }
-    
+   
+    end = std::chrono::system_clock::now();
+ std::chrono::duration<double> elapsed_seconds = end-start;
+ std::time_t end_time = std::chrono::system_clock::to_time_t(end);
  
-    printf("\nSorted array is \n");
-    printArray(arr, N);
-    return 0;
+
+  std::cout << "finished acomputation at " << std::ctime(&end_time)
+              << "elapsed time: " << elapsed_seconds.count() << "s\n";  
+ 
+  /*  printf("\nSorted array is \n");
+    printArray(arr, N); */
+    return 0; 
     
         }
     
