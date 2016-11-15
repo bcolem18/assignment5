@@ -70,7 +70,7 @@ void mergeSort(int arr[], int l, int r)
         int m = l+(r-l)/2;
  
        
-       if((r-1)>1000) 
+       if((r-l)>1000) 
        {
         #pragma omp task
         mergeSort(arr, l, m);
