@@ -10,29 +10,32 @@
 #include<ctime>
 using namespace std;
 
-int findMin(int arr[], int i, int N)
+int findMin(int arr[], int low, int high)
 {
-    if(N==1)
+    if(high - low > 1000)
     {
-        return arr[i];
-    }
-    else
-    {
+   
         int lmin; 
-        int rmin; 
-        #pragma omp task shared(lmin)
-         lmin= findMin(arr, i, N/2); 
+        int rmin;
+        int mid = low + high / 2;
+        #pragma omp task shared(lmin, mid)
+         lmin= findMin(arr, low, mid); 
         
-        #pragma omp task shared(rmin)
-        rmin= findMin(arr, i+(N/2), N-(N/2)); 
+        #pragma omp task shared(rmin, mid)
+        rmin= findMin(arr, mid+1, high); 
         
         #pragma omp taskwait
-        
         return min(lmin, rmin); 
+        
+    } else {
+        // stop spawing and find the
+        // minuimum
+        int minimum = 2000000000;
+        for(int i = low; i <= high; i++) {
+            minimum = std::min(minimum, arr[i]);
+        }
+        return minimum;
     }
-    
-    
-    
 }
 
 int min(int lmin, int rmin)
@@ -89,7 +92,7 @@ int main(int argc, char *argv[])
     {
         
         #pragma omp single
-          min= findMin(arr, 0, N); 
+          min= findMin(arr, 0, N-1); 
         
         
     }
