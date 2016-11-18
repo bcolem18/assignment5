@@ -64,17 +64,44 @@ int oPos(int pos1, int pos2)
 
 
 
-int main()
+int main(int argc, char *argv[])
 
 {
-    
+    if(argc==3)
+    {
 
-     int arr[19]= {1,2,1,4,5,5,5,5,5,7,0,7,7,8,9,10,11,12,55};
+    // int arr[19]= {1,2,1,4,5,5,5,5,5,7,0,7,7,8,9,10,11,12,55};
     
-    int N= 19;
+   // int N= 19;
     int val=7; 
     int x; 
-    int pos=N+1; 
+  
+    
+    
+            
+            srand(time(NULL)); 
+ 
+             int N= atof(argv[1]);
+             int *arr= new int[N]; 
+             int numThreads= atof(argv[2]); 
+              int pos=N+1; 
+ 
+  
+ 
+ 
+  for(int i=0; i<N; i++)
+ {
+     
+     arr[i]= (rand()%10000)+1; 
+    
+    }
+    
+  omp_set_num_threads(numThreads);
+  
+  	std::chrono::time_point<std::chrono::system_clock> start, end;
+
+start = std::chrono::system_clock::now(); 
+    
     #pragma omp parallel 
     {
         
@@ -85,8 +112,17 @@ int main()
         
     }
     
+      end = std::chrono::system_clock::now();
+ std::chrono::duration<double> elapsed_seconds = end-start;
+ std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+ 
+
+  std::cout << "finished acomputation at " << std::ctime(&end_time)
+              << "elapsed time: " << elapsed_seconds.count() << "s\n";  
     
     
     //return min;
    std::cout << "Got " << val << " at index: " << x << std::endl;
+   
+    }
 }
