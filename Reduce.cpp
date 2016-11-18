@@ -55,7 +55,7 @@ int min(int lmin, int rmin)
 
 int main(int argc, char *argv[])
 {
-    if(argc==2)
+    if(argc==3)
     
     {
     
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
  
   int N= atof(argv[1]);
  int *arr= new int[N]; 
- 
+ int numThreads= atof(argv[2]); 
  
   
  
@@ -86,8 +86,12 @@ int main(int argc, char *argv[])
     
    // int N= 19; 
     int min; 
-    omp_set_num_threads(16); 
+    omp_set_num_threads(numThreads); 
    // omp_set_schedule(omp_sched_dynamic, 1000);
+   
+  	std::chrono::time_point<std::chrono::system_clock> start, end;
+
+start = std::chrono::system_clock::now(); 
     #pragma omp parallel 
     {
         
@@ -97,11 +101,13 @@ int main(int argc, char *argv[])
         
     }
     
-    
+    end = std::chrono::system_clock::now();
+ std::chrono::duration<double> elapsed_seconds = end-start;
+ std::time_t end_time = std::chrono::system_clock::to_time_t(end); 
     
     //return min;
     
-   std::cout<<min<<std::endl; 
+  // std::cout<<min<<std::endl; 
     
     
     }
