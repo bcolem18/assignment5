@@ -30,7 +30,7 @@ int findMin(int arr[], int low, int high)
     } else {
         // stop spawing and find the
         // minuimum
-        int minimum = 200000;
+        int minimum = 200;
         for(int i = low; i <= high; i++) {
             minimum = std::min(minimum, arr[i]);
         }
