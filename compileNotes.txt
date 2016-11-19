@@ -1,0 +1,6 @@
+g++ --std=c++11 -fopenmp -O3 -march=native merge.cpp -o merge.exe
+
+g++ --std=c++11 -fopenmp -O3 -march=native FindFst.cpp -o Find.exe
+
+
+g++ --std=c++11 -fopenmp -O3 -march=native Reduce.cpp -o Reduce.exe
